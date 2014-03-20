@@ -66,8 +66,8 @@
 			>
 			<DebugSettings
 				Command="$(TargetPath)"
-				WorkingDirectory=""
-				CommandArguments=""
+				WorkingDirectory="../../work"
+				CommandArguments="-c ../cfg/encoder_randomaccess_main.cfg -c ../cfg/per-sequence/BasketballDrive.cfg --SEIDecodedPictureHash"
 				Attach="false"
 				DebuggerType="3"
 				Remote="1"
@@ -78,7 +78,7 @@
 				SQLDebugging=""
 				Environment=""
 				EnvironmentMerge="true"
-				DebuggerFlavor=""
+				DebuggerFlavor="0"
 				MPIRunCommand=""
 				MPIRunArguments=""
 				MPIRunWorkingDirectory=""

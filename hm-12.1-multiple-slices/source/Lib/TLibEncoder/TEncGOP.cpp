@@ -2785,12 +2785,39 @@ Void TEncGOP::dblMetric( TComPic* pcPic, UInt uiNumSlices )
   }
   else
   {
+    srand((unsigned)time(NULL));
+
     for (Int i=0; i<uiNumSlices; i++)
     {
+#if DEBLOCK_CONTROL
+      // random number genration
+      int flag = rand() % 2;
+
+      // enable deblocking filter for this slice
+      if ( flag == 1)
+      {
+        printf("%i enabled\n", i);
+        pcPic->getSlice(i)->setDeblockingFilterOverrideFlag(true);
+        pcPic->getSlice(i)->setDeblockingFilterDisable(true);
+        pcPic->getSlice(i)->setDeblockingFilterBetaOffsetDiv2( pcPic->getSlice(i)->getPPS()->getDeblockingFilterBetaOffsetDiv2() );
+        pcPic->getSlice(i)->setDeblockingFilterTcOffsetDiv2(   pcPic->getSlice(i)->getPPS()->getDeblockingFilterTcOffsetDiv2()   );
+      }
+
+      // disable deblocking filter for this slice
+      else
+      {
+        printf("%i disabled\n", i);
+        pcPic->getSlice(i)->setDeblockingFilterOverrideFlag(true);
+        pcPic->getSlice(i)->setDeblockingFilterDisable(false);
+        pcPic->getSlice(i)->setDeblockingFilterBetaOffsetDiv2( pcPic->getSlice(i)->getPPS()->getDeblockingFilterBetaOffsetDiv2() );
+        pcPic->getSlice(i)->setDeblockingFilterTcOffsetDiv2(   pcPic->getSlice(i)->getPPS()->getDeblockingFilterTcOffsetDiv2()   );
+      }
+#else
       pcPic->getSlice(i)->setDeblockingFilterOverrideFlag(false);
       pcPic->getSlice(i)->setDeblockingFilterDisable(        pcPic->getSlice(i)->getPPS()->getPicDisableDeblockingFilterFlag() );
       pcPic->getSlice(i)->setDeblockingFilterBetaOffsetDiv2( pcPic->getSlice(i)->getPPS()->getDeblockingFilterBetaOffsetDiv2() );
       pcPic->getSlice(i)->setDeblockingFilterTcOffsetDiv2(   pcPic->getSlice(i)->getPPS()->getDeblockingFilterTcOffsetDiv2()   );
+#endif
     }
   }
   

@@ -359,8 +359,17 @@ Bool TAppEncCfg::parseCfg( Int argc, Char* argv[] )
   ("LoopFilterOffsetInPPS",          m_loopFilterOffsetInPPS,          false )
   ("LoopFilterBetaOffset_div2",      m_loopFilterBetaOffsetDiv2,           0 )
   ("LoopFilterTcOffset_div2",        m_loopFilterTcOffsetDiv2,             0 )
+#if DEBLOCK_CONTROL
+  ("DeblockingFilterControlPresent", m_DeblockingFilterControlPresent, true )
+#else
   ("DeblockingFilterControlPresent", m_DeblockingFilterControlPresent, false )
+#endif
+
+#if DEBLOCK_CONTROL
+  ("DeblockingFilterMetric",         m_DeblockingFilterMetric,         true)
+#else
   ("DeblockingFilterMetric",         m_DeblockingFilterMetric,         false )
+#endif
 
   // Coding tools
   ("AMP",                      m_enableAMP,                 true,  "Enable asymmetric motion partitions")
@@ -533,6 +542,11 @@ Bool TAppEncCfg::parseCfg( Int argc, Char* argv[] )
   po::setDefaults(opts);
   const list<const Char*>& argv_unhandled = po::scanArgv(opts, argc, (const Char**) argv);
   
+#if DEBLOCK_CONTROL
+  this->m_DeblockingFilterControlPresent = true;
+  this->m_DeblockingFilterMetric = true;
+#endif
+
   if(m_isField)
   {
     //Frame height

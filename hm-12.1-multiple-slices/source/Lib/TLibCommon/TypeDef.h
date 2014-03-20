@@ -40,6 +40,7 @@
 
 //! \ingroup TLibCommon
 //! \{
+#define DEBLOCK_CONTROL                 1
 
 #define HM_CLEANUP_SAO                  1  ///< JCTVC-N0230, 1) three SAO encoder-only software bugfixes. 2) new SAO implementation without picture quadtree, fine-grained slice legacies, and other redundancies.
 #if HM_CLEANUP_SAO  
