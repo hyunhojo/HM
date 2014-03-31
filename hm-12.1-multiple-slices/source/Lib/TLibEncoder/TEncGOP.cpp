@@ -2785,16 +2785,16 @@ Void TEncGOP::dblMetric( TComPic* pcPic, UInt uiNumSlices )
   }
   else
   {
-    srand((unsigned)time(NULL));
+    //srand((unsigned)time(NULL));
 
     for (Int i=0; i<uiNumSlices; i++)
     {
 #if DEBLOCK_CONTROL
       // random number genration
-      int flag = rand() % 2;
+      //int flag = rand() % 2;
 
       // enable deblocking filter for this slice
-      if ( flag == 1)
+      if ( i > (uiNumSlices/2) )
       {
         printf("%i enabled\n", i);
         pcPic->getSlice(i)->setDeblockingFilterOverrideFlag(true);
